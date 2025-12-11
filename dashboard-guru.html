@@ -291,13 +291,13 @@
   <script>
     function logout() {
       localStorage.removeItem('currentUser');
-      window.location.href = 'splash.html';
+      window.location.href = 'index.html';
     }
 
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (!user || user.role !== 'guru') {
       alert('Akses ditolak. Silakan login sebagai guru.');
-      window.location.href = 'splash.html';
+      window.location.href = 'index.html';
     } else {
       document.getElementById('userName').textContent = user.nama;
     }
