@@ -402,7 +402,7 @@
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (!user || user.role !== 'siswa') {
       alert('Akses ditolak. Silakan login sebagai siswa.');
-      window.location.href = 'splash.html';
+      window.location.href = 'index.html';
     } else {
       // Tampilkan nama dan kelas — jika kelas tidak ada, tampilkan kosong
       const kelas = user.kelas || '';
@@ -426,7 +426,7 @@
 
     function logout() {
       localStorage.removeItem('currentUser');
-      window.location.href = 'splash.html';
+      window.location.href = 'index.html';
     }
 
     function showRiwayat() {
