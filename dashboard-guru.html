@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Guru - Jurnalku</title>
+  <style>
+    :root {
+      --bg-splash: #EAE5D0;
+      --maroon: #5C3A3A;
+      --brown: #7A5C4B;
+      --red-pastel: #FF9999;
+      --cream: #FFFFFF;
+      --green-pastel: #D0EAD0;
+      --font-brown: #5C3A3A;
+      --font-cream: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, var(--bg-splash), var(--green-pastel));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--bg-splash);
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      width: 60px;
+      height: auto;
+    }
+
+    .greeting {
+      font-size: 1rem;
+      color: var(--maroon);
+      font-weight: 600;
+      text-align: center;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .logout-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--maroon);
+      color: var(--cream);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .logout-btn i {
+      font-size: 1rem;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem;
+    }
+
+    /* Filter Controls */
+    .filter-controls {
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: var(--cream);
+      border: 2px solid var(--maroon);
+      border-radius: 25px;
+      justify-content: center;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .filter-group label {
+      font-weight: 600;
+      color: var(--maroon);
+      font-size: 0.9rem;
+    }
+
+    select, button {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--maroon);
+      border-radius: 20px;
+      background-color: var(--cream);
+      color: var(--font-brown);
+      font-weight: 500;
+      cursor: pointer;
+      width: auto;
+      font-size: 0.9rem;
+    }
+
+    .quick-filter-btn {
+      background-color: var(--red-pastel);
+      color: var(--font-red);
+      border: none;
+      font-weight: 600;
+    }
+
+    .jurnal-item {
+      width: 100%;
+      max-width: 800px;
+      padding: 0.8rem;
+      background-color: var(--cream);
+      border: 2px solid var(--maroon);
+      border-radius: 25px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .jurnal-info {
+      flex: 1;
+    }
+
+    .jurnal-info p {
+      margin: 0.3rem 0;
+      color: var(--font-brown);
+      font-size: 0.9rem;
+    }
+
+    .cek-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--red-pastel);
+      color: var(--font-red);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      .logo, .greeting, .logout-btn {
+        order: 1;
+      }
+
+      .greeting {
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+      }
+
+      .filter-controls {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      .filter-group {
+        width: 100%;
+        align-items: flex-start;
+      }
+
+      .filter-group select, .filter-group button {
+        width: 100%;
+        text-align: center;
+      }
+
+      .jurnal-item {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.6rem;
+      }
+
+      .jurnal-info {
+        margin-bottom: 1rem;
+      }
+
+      .cek-btn {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .filter-controls {
+        padding: 0.8rem;
+      }
+
+      .filter-group label {
+        font-size: 0.8rem;
+      }
+
+      .filter-group select, .filter-group button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .cek-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="header">
+    <img src="splash.png" alt="Logo Jurnalku" class="logo">
+    <div class="greeting">Halo, <span id="userName">Guru</span></div>
+    <button class="logout-btn" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+
+  <div class="content">
+    <h2 style="color: var(--maroon); margin-bottom: 1rem; font-size: 1.1rem;">Daftar Jurnal Menunggu</h2>
+
+    <!-- Filter Controls -->
+    <div class="filter-controls">
+      <div class="filter-group">
+        <label>Bulan:</label>
+        <select id="bulanFilter" onchange="filterJurnal()">
+          <option value="">Semua Bulan</option>
+          <option value="01">Januari</option>
+          <option value="02">Februari</option>
+          <option value="03">Maret</option>
+          <option value="04">April</option>
+          <option value="05">Mei</option>
+          <option value="06">Juni</option>
+          <option value="07">Juli</option>
+          <option value="08">Agustus</option>
+          <option value="09">September</option>
+          <option value="10">Oktober</option>
+          <option value="11">November</option>
+          <option value="12">Desember</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label>Tahun:</label>
+        <select id="tahunFilter" onchange="filterJurnal()">
+          <option value="">Semua Tahun</option>
+          <!-- Tahun akan diisi otomatis -->
+        </select>
+      </div>
+      <div class="filter-group">
+        <button class="quick-filter-btn" onclick="filterToday()">Hari Ini</button>
+        <button class="quick-filter-btn" onclick="filterThisWeek()">Minggu Ini</button>
+        <button class="quick-filter-btn" onclick="filterThisMonth()">Bulan Ini</button>
+      </div>
+    </div>
+
+    <div id="jurnalList">
+      <!-- Jurnal akan ditampilkan di sini -->
+    </div>
+  </div>
+
+  <script>
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'splash.html';
+    }
+
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user || user.role !== 'guru') {
+      alert('Akses ditolak. Silakan login sebagai guru.');
+      window.location.href = 'splash.html';
+    } else {
+      document.getElementById('userName').textContent = user.nama;
+    }
+
+    
+    const allKeys = Object.keys(localStorage);
+    const jurnalList = allKeys.filter(k => k.startsWith('jurnal_'));
+    let filteredJurnalList = [...jurnalList];
+
+    // Isi dropdown tahun otomatis
+    const years = new Set();
+    jurnalList.forEach(key => {
+      const data = JSON.parse(localStorage.getItem(key));
+      if (data.tanggal) {
+        const year = new Date(data.tanggal).getFullYear();
+        years.add(year);
+      }
+    });
+    const yearSelect = document.getElementById('tahunFilter');
+    Array.from(years).sort().forEach(year => {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      yearSelect.appendChild(option);
+    });
+
+    // Tampilkan semua jurnal saat pertama kali
+    renderJurnalList(filteredJurnalList);
+
+    function renderJurnalList(keys) {
+      const listElement = document.getElementById('jurnalList');
+      listElement.innerHTML = '';
+
+      if (keys.length === 0) {
+        listElement.innerHTML = '<p style="text-align: center; color: var(--font-brown);">Tidak ada jurnal yang menunggu.</p>';
+        return;
+      }
+
+      keys.forEach(key => {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (data.status === 'belum disetujui') {
+          // Ambil NIS asli dari data jurnal
+          const nisAsli = data.nis;
+          // Ambil informasi jurusan dari data siswa
+          const users = JSON.parse(localStorage.getItem('users')) || [];
+          const siswa = users.find(u => u.nis === nisAsli);
+          const jurusan = siswa ? siswa.jurusan : '-';
+
+          listElement.innerHTML += `
+            <div class="jurnal-item">
+              <div class="jurnal-info">
+                <p><strong>Nama:</strong> ${data.nama}</p>
+                <p><strong>NIS:</strong> ${nisAsli}</p>
+                <p><strong>Tanggal:</strong> ${data.tanggal}</p>
+                <p><strong>Jurusan:</strong> ${jurusan}</p>
+              </div>
+              <button class="cek-btn" onclick="location.href='jurnal-detail-guru.html?nis=${nisAsli}'">Cek</button>
+            </div>
+          `;
+        }
+      });
+    }
+
+    function filterJurnal() {
+      const bulan = document.getElementById('bulanFilter').value;
+      const tahun = document.getElementById('tahunFilter').value;
+
+      filteredJurnalList = jurnalList.filter(key => {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (!data.tanggal) return false;
+
+        const date = new Date(data.tanggal);
+        const monthMatch = bulan ? date.getMonth() + 1 === parseInt(bulan) : true;
+        const yearMatch = tahun ? date.getFullYear() === parseInt(tahun) : true;
+
+        return monthMatch && yearMatch && data.status === 'belum disetujui';
+      });
+
+      renderJurnalList(filteredJurnalList);
+    }
+
+    function filterToday() {
+      const today = new Date().toISOString().split('T')[0];
+      filteredJurnalList = jurnalList.filter(key => {
+        const data = JSON.parse(localStorage.getItem(key));
+        return data.tanggal === today && data.status === 'belum disetujui';
+      });
+      renderJurnalList(filteredJurnalList);
+    }
+
+    function filterThisWeek() {
+      const today = new Date();
+      const firstDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
+      const lastDayOfWeek = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+
+      filteredJurnalList = jurnalList.filter(key => {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (!data.tanggal) return false;
+
+        const jurnalDate = new Date(data.tanggal);
+        return jurnalDate >= firstDayOfWeek && jurnalDate <= lastDayOfWeek && data.status === 'belum disetujui';
+      });
+      renderJurnalList(filteredJurnalList);
+    }
+
+    function filterThisMonth() {
+      const currentMonth = new Date().getMonth() + 1;
+      const currentYear = new Date().getFullYear();
+
+      filteredJurnalList = jurnalList.filter(key => {
+        const data = JSON.parse(localStorage.getItem(key));
+        if (!data.tanggal) return false;
+
+        const date = new Date(data.tanggal);
+        const monthMatch = date.getMonth() + 1 === currentMonth;
+        const yearMatch = date.getFullYear() === currentYear;
+
+        return monthMatch && yearMatch && data.status === 'belum disetujui';
+      });
+      renderJurnalList(filteredJurnalList);
+    }
+  </script>
+</body>
+</html>

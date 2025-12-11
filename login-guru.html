@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Guru - Jurnalku</title>
+  <style>
+    :root {
+      --bg-splash: #EAE5D0;
+      --maroon: #5C3A3A;
+      --brown: #a86d6d;
+      --red-pastel: #943a3a;
+      --cream: #FFFFFF;
+      --font-brown: #5C3A3A;
+      --bubble1: #aa7167;  /* Merah muda */
+      --bubble2: #8a6d6d;  /* Coklat muda */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-splash);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    .decoration {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 1.0;
+    }
+
+    /* Bubble Kiri */
+    .bubble:nth-child(1) {
+      width: 150px;
+      height: 150px;
+      top: -50px;
+      left: -50px;
+      background-color: var(--bubble1);
+    }
+    .bubble:nth-child(2) {
+      width: 60px;
+      height: 60px;
+      top: 100px;
+      left: -30px;
+      background-color: var(--bubble2);
+    }
+    .bubble:nth-child(3) {
+      width: 120px;
+      height: 120px;
+      top: 200px;
+      left: -40px;
+      background-color: var(--bubble1);
+    }
+    .bubble:nth-child(4) {
+      width: 50px;
+      height: 50px;
+      top: 300px;
+      left: -20px;
+      background-color: var(--bubble2);
+    }
+
+    /* Bubble Kanan */
+    .bubble:nth-child(5) {
+      width: 100px;
+      height: 100px;
+      bottom: -40px;
+      right: -30px;
+      background-color: var(--bubble1);
+    }
+    .bubble:nth-child(6) {
+      width: 70px;
+      height: 70px;
+      bottom: 150px;
+      right: -20px;
+      background-color: var(--bubble2);
+    }
+    .bubble:nth-child(7) {
+      width: 130px;
+      height: 130px;
+      bottom: 250px;
+      right: -50px;
+      background-color: var(--bubble1);
+    }
+    .bubble:nth-child(8) {
+      width: 50px;
+      height: 50px;
+      bottom: 350px;
+      right: -10px;
+      background-color: var(--bubble2);
+    }
+
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .logo {
+      width: 300px;
+      height: auto;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05));
+    }
+
+   .back-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0.5rem 1rem;
+  background-color: var(--maroon);
+  color: var(--cream);
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+    .form-container {
+      background-color: transparent;
+      padding: 2.5rem;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 2px solid var(--brown);
+      border-radius: 25px;
+      font-size: 1rem;
+      background-color: transparent;
+      color: var(--font-brown);
+      font-weight: 500;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    .submit-btn {
+      width: 60%;
+      padding: 0.9rem;
+      background-color: var(--brown);
+      color: var(--cream);
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1.8rem;
+    }
+
+    .submit-btn:hover {
+      background-color: #6a4d3f;
+    }
+
+    .error {
+      color: red;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 1.8rem;
+      }
+
+      .submit-btn {
+        width: 80%;
+        margin-top: 1.5rem;
+      }
+
+      .back-btn {
+        top: 15px;
+        right: 15px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .logo {
+        width: 300px;
+      }
+
+      .bubble {
+        opacity: 0.6;
+      }
+
+      .bubble:nth-child(1) { width: 100px; height: 100px; top: -30px; left: -30px; }
+      .bubble:nth-child(5) { width: 80px; height: 80px; bottom: -20px; right: -20px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="decoration">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+  <button class="back-btn" onclick="location.href='splash.html'">
+ <i class="fas fa-arrow-left"></i>
+</button>
+
+  <div class="logo-container">
+    <img src="splash.png" alt="Logo Jurnalku" class="logo">
+  </div>
+
+  <div class="form-container">
+    <div id="error-message" class="error" style="display: none;"></div>
+    <form id="loginForm">
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="submit-btn">Masuk</button>
+    </form>
+    <p style="margin-top: 1rem;">
+      Belum punya akun? <a href="register-guru.html" style="color: var(--brown); text-decoration: underline;">Daftar di sini</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Ambil data dari localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const user = users.find(u => u.username === username && u.password === password && u.role === 'guru');
+
+      if (user) {
+        alert('Login berhasil!');
+        // Simpan data user ke localStorage
+        localStorage.setItem('currentUser', JSON.stringify({ nama: user.nama, role: user.role }));
+        window.location.href = 'dashboard-guru.html';
+      } else {
+        document.getElementById('error-message').textContent = 'Username atau Password salah!';
+        document.getElementById('error-message').style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daftar Siswa - Jurnalku</title>
+  <style>
+    :root {
+      --bg-splash: #EAE5D0;
+      --maroon: #5C3A3A;
+      --brown: #7A5C4B;
+      --red-pastel: #e28787; /* <-- Warna tombol */
+      --cream: #FFFFFF;
+      --font-brown: #5C3A3A;
+      --bubble1: #D47A6A; /* <-- Warna bubble 1 */
+      --bubble2: #8B5E5E; /* <-- Warna bubble 2 */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-splash);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    .decoration {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 1.0;
+    }
+
+    .bubble:nth-child(1) { width: 150px; height: 150px; top: -50px; left: -50px; background-color: var(--bubble1); }
+    .bubble:nth-child(2) { width: 60px; height: 60px; top: 100px; left: -30px; background-color: var(--bubble2); }
+    .bubble:nth-child(3) { width: 120px; height: 120px; top: 200px; left: -40px; background-color: var(--bubble1); }
+    .bubble:nth-child(4) { width: 50px; height: 50px; top: 300px; left: -20px; background-color: var(--bubble2); }
+    .bubble:nth-child(5) { width: 100px; height: 100px; bottom: -40px; right: -30px; background-color: var(--bubble1); }
+    .bubble:nth-child(6) { width: 70px; height: 70px; bottom: 150px; right: -20px; background-color: var(--bubble2); }
+    .bubble:nth-child(7) { width: 130px; height: 130px; bottom: 250px; right: -50px; background-color: var(--bubble1); }
+    .bubble:nth-child(8) { width: 50px; height: 50px; bottom: 350px; right: -10px; background-color: var(--bubble2); }
+
+    .logo-container {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+    }
+
+    .logo {
+      width: 200px; 
+      height: auto;
+      filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05));
+    }
+
+    .back-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0.5rem 1rem;
+  background-color: var(--maroon);
+  color: var(--cream);
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+    .form-container {
+      background-color: transparent;
+      padding: 2.5rem;
+      border-radius: 15px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      margin-top: 3rem; 
+    }
+
+    .input-group {
+      margin-bottom: 1.2rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      border: 2px solid var(--maroon); 
+      border-radius: 25px;
+      font-size: 1rem;
+      background-color: transparent;
+      color: var(--font-brown);
+      font-weight: 500;
+    }
+
+    input::placeholder {
+      color: #aaa;
+    }
+
+    .submit-btn {
+      width: 60%;
+      padding: 0.9rem;
+      background-color: var(--red-pastel); 
+      color: var(--cream);
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1.8rem;
+    }
+
+    .submit-btn:hover {
+      background-color: #ff8080;
+    }
+
+    .error {
+      color: red;
+      margin-top: 1rem;
+    }
+
+    .success {
+      color: green;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-container {
+        padding: 1.8rem;
+      }
+
+      .submit-btn {
+        width: 80%;
+        margin-top: 1.5rem;
+      }
+
+      .back-btn {
+        top: 15px;
+        right: 15px;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+      }
+
+      .logo {
+        width: 100px;
+      }
+
+      .bubble {
+        opacity: 0.6;
+      }
+
+      .bubble:nth-child(1) { width: 100px; height: 100px; top: -30px; left: -30px; }
+      .bubble:nth-child(5) { width: 80px; height: 80px; bottom: -20px; right: -20px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  
+  <div class="decoration">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+  <button class="back-btn" onclick="location.href='splash.html'">
+     <i class="fas fa-arrow-left"></i>
+</button>
+
+  <div class="logo-container">
+    <img src="splash.png" alt="Logo Jurnalku" class="logo">
+  </div>
+
+  <div class="form-container">
+    <div id="message"></div>
+    <form id="registerForm">
+      <div class="input-group">
+        <input type="text" id="nama" placeholder="Nama Lengkap" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="nis" placeholder="NIS" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="jurusan" placeholder="Jurusan/Program Keahlian" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="kelas" placeholder="Kelas (misal: XI PPLG 2)" required>
+      </div>
+      <div class="input-group">
+        <input type="text" id="perusahaan" placeholder="Nama Perusahaan/Industri" required>
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="submit-btn">Daftar</button>
+    </form>
+    <p style="margin-top: 1rem;">
+      Sudah punya akun? <a href="login-siswa.html" style="color: var(--maroon); text-decoration: underline;">Login di sini</a>
+    </p>
+  </div>
+  
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nama = document.getElementById('nama').value;
+      const nis = document.getElementById('nis').value;
+      const jurusan = document.getElementById('jurusan').value;
+      const kelas = document.getElementById('kelas').value;
+      const perusahaan = document.getElementById('perusahaan').value; 
+      const password = document.getElementById('password').value;
+
+      // Ambil data dari localStorage
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+
+      // Cek apakah NIS sudah ada
+      const existingUser = users.find(u => u.nis === nis);
+      if (existingUser) {
+        document.getElementById('message').innerHTML = '<div class="error">NIS sudah terdaftar!</div>';
+        return;
+      }
+
+      // Tambahkan user baru
+      users.push({
+        nama,
+        nis,
+        jurusan,
+        kelas,
+        perusahaan,
+        password,
+        role: 'siswa'
+      });
+      localStorage.setItem('users', JSON.stringify(users));
+
+      document.getElementById('message').innerHTML = '<div class="success">Akun berhasil dibuat! Silakan login.</div>';
+      document.getElementById('registerForm').reset();
+
+      
+      setTimeout(() => {
+        window.location.href = 'login-siswa.html';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

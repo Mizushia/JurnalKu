@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detail Jurnal - Jurnalku</title>
+  <style>
+    :root {
+      --bg-splash: #EAE5D0;
+      --maroon: #5C3A3A;
+      --brown: #7A5C4B;
+      --red-pastel: #FF9999;
+      --pink: #FFC0CB;
+      --cream: #FFFFFF;
+      --green-pastel: #D0EAD0;
+      --font-brown: #5C3A3A;
+      --font-cream: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, var(--bg-splash), var(--green-pastel));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--bg-splash);
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .logo {
+      width: 60px;
+      height: auto;
+    }
+
+    .greeting {
+      font-size: 1.2rem;
+      color: var(--maroon);
+      font-weight: 600;
+      text-align: center;
+      flex: 1; /* <-- Biar teks di tengah */
+    }
+
+    .back-btn {
+      padding: 0.5rem 1rem;
+      background-color: var(--maroon);
+      color: var(--cream);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .detail-box {
+      width: 100%;
+      max-width: 800px;
+      padding: 1rem;
+      background-color: var(--cream);
+      border: 2px solid var(--maroon);
+      border-radius: 25px;
+      margin-bottom: 1rem;
+    }
+
+    .detail-box h3 {
+      color: var(--maroon);
+      margin-bottom: 0.5rem;
+    }
+
+    .detail-box p {
+      margin: 0.3rem 0;
+      color: var(--font-brown);
+    }
+
+    .setujui-btn {
+      width: 30%;
+      padding: 0.8rem;
+      background-color: var(--red-pastel);
+      color: var(--font-red);
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 1rem;
+    }
+
+    .setujui-btn:hover {
+      background-color: #ff8080;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        padding: 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      .logo, .greeting, .back-btn {
+        order: 1;
+      }
+
+      .greeting {
+        order: 2;
+        font-size: 1rem;
+        margin: 0.5rem 0;
+      }
+
+      .back-btn {
+        order: 3;
+      }
+
+      .setujui-btn {
+        width: 50%;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="header">
+    <img src="splash.png" alt="Logo Jurnalku" class="logo">
+    <div class="greeting">Jurnal Milik: <span id="detail-nama">...</span></div>
+    <button class="back-btn" onclick="location.href='dashboard-guru.html'">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+  </div>
+
+  <div class="content">
+    <div class="detail-box">
+      <h3>Nama Industri</h3>
+      <p id="detail-industri">-</p>
+    </div>
+    <div class="detail-box">
+      <h3>Tanggal</h3>
+      <p id="detail-tanggal">-</p>
+    </div>
+    <div class="detail-box">
+      <h3>Tempat/Area</h3>
+      <p id="detail-tempat">-</p>
+    </div>
+    <div class="detail-box">
+      <h3>Kegiatan</h3>
+      <p id="detail-kegiatan">-</p>
+    </div>
+    <button class="setujui-btn" onclick="approveJurnal()">Setujui</button>
+  </div>
+
+  <script>
+    function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    const nis = getUrlParameter('nis');
+    if (nis) {
+      // Ambil data dari localStorage
+      const jurnal = JSON.parse(localStorage.getItem(`jurnal_${nis}`));
+      if (jurnal) {
+        document.getElementById('detail-nama').textContent = jurnal.nama;
+        document.getElementById('detail-industri').textContent = jurnal.namaIndustri || '-';
+        document.getElementById('detail-tanggal').textContent = jurnal.tanggal || '-';
+        document.getElementById('detail-tempat').textContent = jurnal.tempat || '-';
+        document.getElementById('detail-kegiatan').textContent = jurnal.kegiatan || '-';
+      }
+    }
+
+    function approveJurnal() {
+      if (nis) {
+        let jurnal = JSON.parse(localStorage.getItem(`jurnal_${nis}`));
+        if (jurnal) {
+          jurnal.status = 'disetujui';
+          localStorage.setItem(`jurnal_${nis}`, JSON.stringify(jurnal));
+          alert('Jurnal berhasil disetujui!');
+          window.location.href = 'thanks-view.html';
+        }
+      }
+    }
+  </script>
+</body>
+</html>

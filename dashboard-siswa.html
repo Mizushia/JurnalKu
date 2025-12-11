@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Siswa - Jurnalku</title>
+  <style>
+    :root {
+      --bg-splash: #EAE5D0;
+      --maroon: #5C3A3A;
+      --brown: #7A5C4B;
+      --red-pastel: #FF9999;
+      --pink: #FFC0CB;
+      --cream: #FFFFFF;
+      --green-pastel: #D0EAD0;
+      --font-brown: #5C3A3A;
+      --font-cream: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom, var(--bg-splash), var(--green-pastel));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1.5rem;
+      background-color: var(--bg-splash);
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .riwayat-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--maroon);
+      color: var(--cream);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .riwayat-btn i {
+      font-size: 1rem;
+    }
+
+    .greeting {
+      font-size: 1rem;
+      color: var(--maroon);
+      font-weight: 600;
+      text-align: center;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .logout-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--pink);
+      color: var(--font-red);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .logout-btn i {
+      font-size: 1rem;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      width: 100%;
+      max-width: 800px;
+      margin-bottom: 1rem;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 2px solid var(--maroon);
+      border-radius: 25px;
+      font-size: 1rem;
+      background-color: var(--cream);
+      color: var(--font-brown);
+      font-weight: 500;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      padding: 0.7rem 1.2rem;
+      background-color: var(--red-pastel);
+      color: var(--font-red);
+      border: none;
+      border-radius: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 2rem;
+      width: auto;
+    }
+
+    .submit-btn:hover {
+      background-color: #ff8080;
+    }
+
+    /* Modal Riwayat Jurnal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: var(--cream);
+      padding: 1.5rem;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 800px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--maroon);
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      color: var(--maroon);
+      font-weight: 600;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--maroon);
+      cursor: pointer;
+    }
+
+    /* Tampilan Riwayat seperti Dashboard Guru */
+    .jurnal-item {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: var(--cream);
+      border: 2px solid var(--maroon);
+      border-radius: 25px;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .jurnal-info {
+      flex: 1;
+    }
+
+    .jurnal-info p {
+      margin: 0.3rem 0;
+      color: var(--font-brown);
+      font-size: 0.9rem;
+    }
+
+    .edit-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--maroon);
+      color: var(--cream);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+    }
+
+    .cek-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--green-pastel);
+      color: var(--font-brown);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+    }
+
+    .hapus-btn {
+      padding: 0.4rem 0.8rem;
+      background-color: var(--red-pastel);
+      color: var(--font-red);
+      border: none;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 600px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .submit-btn {
+        margin-top: 2rem;
+      }
+
+      .header {
+        padding: 0.8rem 1rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        justify-content: center;
+      }
+
+      .riwayat-btn, .logout-btn {
+        order: 1;
+      }
+
+      .greeting {
+        order: 2;
+        font-size: 0.9rem;
+        margin: 0.5rem 0;
+      }
+
+      .modal-content {
+        padding: 1rem;
+      }
+
+      .jurnal-item {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0.6rem;
+      }
+
+      .jurnal-actions {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 1rem;
+      }
+
+      .edit-btn, .cek-btn, .hapus-btn {
+        width: 30%;
+        margin-right: 0;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .jurnal-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .edit-btn, .cek-btn, .hapus-btn {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="header">
+    <button class="riwayat-btn" onclick="showRiwayat()">
+      <i class="fas fa-history"></i>
+    </button>
+    <div class="greeting">Halo, <span id="userName">User</span></div>
+    <button class="logout-btn" onclick="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+    </button>
+  </div>
+
+  <div class="content">
+    <div class="form-grid">
+      <div class="input-group">
+        <label>Status jurnal</label>
+        <div id="statusJurnal" style="padding: 0.8rem; border: 2px solid var(--maroon); border-radius: 25px; background-color: var(--cream); color: var(--font-brown);">
+          Belum disetujui
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Nama industri</label>
+        <input type="text" id="namaIndustri" placeholder="Isi disini">
+      </div>
+      <div class="input-group">
+        <label>Tanggal</label>
+        <input type="date" id="tanggal">
+      </div>
+      <div class="input-group">
+        <label>Tempat/Area</label>
+        <input type="text" id="tempat" placeholder="Isi disini">
+      </div>
+    </div>
+
+    <div class="input-group" style="width: 100%; max-width: 800px;">
+      <label>Kegiatan</label>
+      <textarea id="kegiatan" placeholder="Isi disini"></textarea>
+    </div>
+
+    <!-- Tombol Kirim -->
+    <div id="submitSection">
+      <button class="submit-btn" onclick="submitJurnal()">Kirim</button>
+    </div>
+  </div>
+
+  <!-- Modal Riwayat Jurnal -->
+  <div id="riwayatModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Riwayat Jurnal</h2>
+        <button class="close-btn" onclick="hideRiwayat()">&times;</button>
+      </div>
+      <div id="riwayatList">
+        <!-- Daftar jurnal akan ditampilkan di sini -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Detail Jurnal -->
+  <div id="detailModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Detail Jurnal</h2>
+        <button class="close-btn" onclick="hideDetail()">&times;</button>
+      </div>
+      <div id="detailContent">
+        <!-- Detail jurnal akan ditampilkan di sini -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Edit Jurnal -->
+  <div id="editModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Edit Jurnal</h2>
+        <button class="close-btn" onclick="hideEdit()">&times;</button>
+      </div>
+      <div id="editContent">
+        <!-- Form edit jurnal akan ditampilkan di sini -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Ambil data user dari localStorage
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user || user.role !== 'siswa') {
+      alert('Akses ditolak. Silakan login sebagai siswa.');
+      window.location.href = 'splash.html';
+    } else {
+      // Tampilkan nama dan kelas — jika kelas tidak ada, tampilkan kosong
+      const kelas = user.kelas || '';
+      document.getElementById('userName').textContent = user.nama + ' (' + kelas + ')';
+
+      // Ambil data lengkap siswa dari tabel users untuk ambil nama perusahaan
+      const users = JSON.parse(localStorage.getItem('users')) || [];
+      const userData = users.find(u => u.nis === user.nis);
+
+      if (userData && userData.perusahaan) {
+        // Isi otomatis ke form
+        document.getElementById('namaIndustri').value = userData.perusahaan;
+      }
+    }
+
+    // Reset form saat halaman dimuat (kecuali nama industri)
+    document.getElementById('tanggal').value = '';
+    document.getElementById('tempat').value = '';
+    document.getElementById('kegiatan').value = '';
+    document.getElementById('statusJurnal').textContent = 'Belum disetujui';
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'splash.html';
+    }
+
+    function showRiwayat() {
+      const modal = document.getElementById('riwayatModal');
+      modal.style.display = 'flex';
+
+      const riwayatList = document.getElementById('riwayatList');
+      riwayatList.innerHTML = '';
+
+      // Ambil semua jurnal dari localStorage
+      const allKeys = Object.keys(localStorage);
+      const jurnalList = allKeys.filter(k => k.startsWith('jurnal_') && k.includes(user.nis));
+
+      if (jurnalList.length === 0) {
+        riwayatList.innerHTML = '<p style="text-align: center; color: var(--font-brown);">Tidak ada riwayat jurnal.</p>';
+      } else {
+        jurnalList.forEach(key => {
+          const data = JSON.parse(localStorage.getItem(key));
+          const date = new Date(data.tanggal).toLocaleDateString('id-ID');
+
+          riwayatList.innerHTML += `
+            <div class="jurnal-item">
+              <div class="jurnal-info">
+                <p><strong>Tanggal:</strong> ${date}</p>
+                <p><strong>Status:</strong> ${data.status}</p>
+              </div>
+              <div class="jurnal-actions">
+                <button class="edit-btn" onclick="loadEditForm('${key}')"><i class="fas fa-pencil-alt"></i> Edit</button>
+                <button class="cek-btn" onclick="showDetail('${key}')"><i class="fas fa-eye"></i> Cek</button>
+                <button class="hapus-btn" onclick="confirmDelete('${key}')"><i class="fas fa-trash-alt"></i> Hapus</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+    }
+
+    function hideRiwayat() {
+      const modal = document.getElementById('riwayatModal');
+      modal.style.display = 'none';
+    }
+
+    function showDetail(key) {
+      const data = JSON.parse(localStorage.getItem(key));
+      const date = new Date(data.tanggal).toLocaleDateString('id-ID');
+
+      const detailContent = document.getElementById('detailContent');
+      detailContent.innerHTML = `
+        <div class="detail-box">
+          <h3>Nama Industri</h3>
+          <p>${data.namaIndustri || '-'}</p>
+        </div>
+        <div class="detail-box">
+          <h3>Tanggal</h3>
+          <p>${date}</p>
+        </div>
+        <div class="detail-box">
+          <h3>Tempat/Area</h3>
+          <p>${data.tempat || '-'}</p>
+        </div>
+        <div class="detail-box">
+          <h3>Kegiatan</h3>
+          <p>${data.kegiatan || '-'}</p>
+        </div>
+        <div class="detail-box">
+          <h3>Status</h3>
+          <p>${data.status}</p>
+        </div>
+      `;
+
+      // Sembunyikan modal riwayat, tampilkan modal detail
+      document.getElementById('riwayatModal').style.display = 'none';
+      document.getElementById('detailModal').style.display = 'flex';
+    }
+
+    function hideDetail() {
+      const modal = document.getElementById('detailModal');
+      modal.style.display = 'none';
+    }
+
+    function loadEditForm(key) {
+      const data = JSON.parse(localStorage.getItem(key));
+      const editContent = document.getElementById('editContent');
+      editContent.innerHTML = `
+        <div class="detail-box">
+          <h3>Edit Jurnal</h3>
+        </div>
+        <div class="detail-box">
+          <label>Nama industri</label>
+          <input type="text" id="editNamaIndustri" value="${data.namaIndustri || ''}" placeholder="Isi disini">
+        </div>
+        <div class="detail-box">
+          <label>Tanggal</label>
+          <input type="date" id="editTanggal" value="${data.tanggal || ''}">
+        </div>
+        <div class="detail-box">
+          <label>Tempat/Area</label>
+          <input type="text" id="editTempat" value="${data.tempat || ''}" placeholder="Isi disini">
+        </div>
+        <div class="detail-box">
+          <label>Kegiatan</label>
+          <textarea id="editKegiatan" placeholder="Isi disini">${data.kegiatan || ''}</textarea>
+        </div>
+        <div class="detail-box">
+          <button class="submit-btn" onclick="saveEdit('${key}')">Simpan Perubahan</button>
+        </div>
+      `;
+
+      // Sembunyikan modal riwayat, tampilkan modal edit
+      document.getElementById('riwayatModal').style.display = 'none';
+      document.getElementById('editModal').style.display = 'flex';
+    }
+
+    function hideEdit() {
+      const modal = document.getElementById('editModal');
+      modal.style.display = 'none';
+    }
+
+    function saveEdit(key) {
+      const namaIndustri = document.getElementById('editNamaIndustri').value;
+      const tanggal = document.getElementById('editTanggal').value;
+      const tempat = document.getElementById('editTempat').value;
+      const kegiatan = document.getElementById('editKegiatan').value;
+
+      if (!tanggal || !namaIndustri || !tempat || !kegiatan) {
+        alert('Semua field harus diisi!');
+        return;
+      }
+
+      const jurnalBaru = {
+        nis: user.nis,
+        nama: user.nama,
+        namaIndustri,
+        tanggal,
+        tempat,
+        kegiatan,
+        status: 'belum disetujui',
+        timestamp: new Date().toISOString()
+      };
+
+      // Simpan ke localStorage
+      localStorage.setItem(key, JSON.stringify(jurnalBaru));
+
+      alert('Jurnal berhasil diperbarui!');
+
+      // Tutup modal
+      hideEdit();
+
+      // Refresh riwayat
+      showRiwayat();
+    }
+
+    function confirmDelete(key) {
+      if (confirm('Apakah Anda yakin ingin menghapus jurnal ini?')) {
+        localStorage.removeItem(key);
+        alert('Jurnal berhasil dihapus!');
+        hideRiwayat();
+        showRiwayat();
+      }
+    }
+
+    function submitJurnal() {
+      const namaIndustri = document.getElementById('namaIndustri').value;
+      const tanggal = document.getElementById('tanggal').value;
+      const tempat = document.getElementById('tempat').value;
+      const kegiatan = document.getElementById('kegiatan').value;
+
+      if (!tanggal || !namaIndustri || !tempat || !kegiatan) {
+        alert('Semua field harus diisi!');
+        return;
+      }
+
+      const jurnalBaru = {
+        nis: user.nis,
+        nama: user.nama,
+        namaIndustri,
+        tanggal,
+        tempat,
+        kegiatan,
+        status: 'belum disetujui',
+        timestamp: new Date().toISOString()
+      };
+
+      
+      // Simpan ke localStorage
+      localStorage.setItem(`jurnal_${user.nis}`, JSON.stringify(jurnalBaru));
+
+      // Reset form (kecuali nama industri)
+      document.getElementById('tanggal').value = '';
+      document.getElementById('tempat').value = '';
+      document.getElementById('kegiatan').value = '';
+      document.getElementById('statusJurnal').textContent = 'Belum disetujui';
+
+      alert('Jurnal berhasil dikirim!');
+
+      // Redirect ke thanks-view
+      window.location.href = 'thanks-view.html';
+    }
+  </script>
+</body>
+</html>

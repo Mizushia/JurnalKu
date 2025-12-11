@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terima Kasih - Jurnalku</title>
+  <style>
+    :root {
+      --bg-splash: #EAE5D0;
+      --maroon: #5C3A3A;
+      --red-pastel: #FF9999;
+      --cream: #FFFFFF;
+      --font-brown: #5C3A3A;
+      --font-cream: #FFFFFF;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-splash);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .header {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .logout-btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--pink);
+  color: var(--font-red);
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+    .message {
+      text-align: center;
+      font-size: 1.5rem;
+      color: var(--font-brown);
+      margin: 2rem 0;
+      font-weight: 600;
+    }
+
+    .back-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 0.5rem 1rem;
+  background-color: var(--maroon);
+  color: var(--cream);
+  border: none;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+    .back-btn:hover {
+      background-color: #ff8080;
+    }
+
+    @media (max-width: 600px) {
+      .message {
+        font-size: 1.3rem;
+      }
+
+      .back-btn {
+        padding: 0.9rem 1.5rem;
+        font-size: 1rem;
+      }
+
+      body {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <div class="header">
+    <button class="logout-btn" onclick="logout()">Logout</button>
+  </div>
+
+  <div class="message">
+    Terima kasih, jaga diri selalu ya!
+  </div>
+
+  <button class="back-btn" onclick="location.href='splash.html'">Kembali ke Splash</button>
+
+  <script>
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'splash.html';
+    }
+  </script>
+</body>
+</html>

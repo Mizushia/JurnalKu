@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jurnalku - Splash</title>
+  <style>
+    :root {
+      --bg-splash: #EAE5D0;
+      --maroon: #5C3A3A;
+      --brown: #7A5C4B;
+      --red-pastel: #FF9999;
+      --cream: #FFFFFF;
+      --font-brown: #5C3A3A;
+      --font-cream: #FFFFFF;
+      --font-red: #5C3A3A;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-splash);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      padding: 1rem; /* <-- Kurangi padding di HP */
+    }
+
+    .decoration {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .decoration::before,
+    .decoration::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .decoration::before {
+      top: -100px;
+      left: -100px;
+    }
+
+    .decoration::after {
+      bottom: -100px;
+      right: -100px;
+    }
+
+    .gelombang-kiri,
+    .gelombang-kanan {
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      top: -20px;
+    }
+
+    .gelombang-kiri {
+      left: -40px;
+    }
+
+    .gelombang-kanan {
+      right: -40px;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 4rem; 
+    }
+
+    .logo {
+      width: 500px; 
+      height: auto;
+      border-radius: 10px;
+    }
+
+    .logo-text {
+      font-size: 2rem; 
+      font-weight: 700;
+      color: var(--maroon);
+      margin-top: 0.5rem;
+    }
+
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 1.5rem; 
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem; 
+      border: none;
+      border-radius: 25px;
+      font-size: 1rem; /* <-- Lebih kecil */
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 160px; /* <-- Lebih kecil */
+      text-align: center;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .btn-siswa {
+      background-color: var(--maroon);
+      color: var(--cream);
+    }
+
+    .btn-guru {
+      background-color: var(--brown);
+      color: var(--cream);
+    }
+
+    @media (min-width: 600px) {
+      body {
+        padding: 1.5rem;
+      }
+      .logo {
+        width: 400px;
+      }
+      .logo-text {
+        font-size: 2.5rem;
+      }
+      .button-group {
+        margin-top: 2rem;
+      }
+      .btn {
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        min-width: 200px;
+      }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="decoration"></div>
+
+  <!-- Gelombang kecil di pojok kiri & kanan atas -->
+  <div class="gelombang-kiri"></div>
+  <div class="gelombang-kanan"></div>
+
+  <div class="logo-container">
+    <img src="splash.png" alt="Logo Jurnalku" class="logo">
+  </div>
+
+  <div class="button-group">
+    <button class="btn btn-siswa" onclick="location.href='login-siswa.html'">Login as Siswa</button>
+    <button class="btn btn-guru" onclick="location.href='login-guru.html'">Login as Guru</button>
+    <p style="margin-top: 1rem; color: var(--font-brown); font-size: 0.9rem;">
+      Belum punya akun? <a href="register-siswa.html" style="color: var(--maroon); text-decoration: underline;">Daftar Siswa</a> | <a href="register-guru.html" style="color: var(--brown); text-decoration: underline;">Daftar Guru</a>
+    </p>
+  </div>
+
+  <script>
+    // Tambahkan data awal jika localStorage kosong
+    if (!localStorage.getItem('users')) {
+      localStorage.setItem('users', JSON.stringify([
+        {
+          nama: "Chevien",
+          nis: "12345",
+          password: "12345",
+          role: "siswa"
+        },
+        {
+          nama: "Guru Andi",
+          username: "guru1",
+          password: "guru123",
+          role: "guru"
+        }
+      ]));
+    }
+  </script>
+</body>
+</html>
